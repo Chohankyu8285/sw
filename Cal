@@ -1,10 +1,11 @@
-import javax.swing.*;
+﻿import javax.swing.*;
 import java.awt.*;
 import javax.swing.event.*;
 import java.awt.event.*;
 
 public class Calculator extends JFrame implements ActionListener{
 	/*버튼 필드*/
+
 	JTextField tf = new JTextField("여기에 출력");
 	JButton btReset = new JButton("Reset");	//clear
 	JButton btcal = new JButton("Calculate");	//= 계산
