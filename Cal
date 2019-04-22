@@ -1,0 +1,156 @@
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+
+public class Calculator extends JFrame implements ActionListener{
+	/*버튼 필드*/
+	JTextField tf = new JTextField("여기에 출력");
+	JButton btReset = new JButton("Reset");	//clear
+	JButton btcal = new JButton("Calculate");	//= 계산
+	JButton bt1 = new JButton("1");
+	JButton bt2 = new JButton("2");
+	JButton bt3 = new JButton("3");
+	JButton bt4 = new JButton("4");
+	JButton bt5 = new JButton("5");
+	JButton bt6 = new JButton("6");
+	JButton bt7 = new JButton("7");
+	JButton bt8 = new JButton("8");
+	JButton bt9 = new JButton("9");
+	JButton bt0 = new JButton("0");
+	JButton btDot = new JButton(".");
+	JButton btAdd = new JButton("+");
+	JButton btSub = new JButton("-");
+	JButton btMul = new JButton("*");
+	JButton btDiv = new JButton("/");
+	
+	boolean su,cu;	//연산자 유무
+	String str1="",str2="",op=""; //계산값 저장배열
+	double i,j,result;	//실수값 계산
+	
+	Calculator(){
+		/*영역 지정*/
+		Container ca = new Container();
+		Container bu = new Container();
+		ca.setLayout(new BorderLayout());
+		bu.setLayout(new GridLayout(4,4));
+		
+		/*상단부*/
+		setTitle("계산기");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);/*x버튼으로 프로그램 종료*/
+	
+		/*컨텐츠*/
+		Container cp = getContentPane();
+		cp.setLayout(new BorderLayout());/*객체 생성(5개 영역)*/ 
+		
+	
+		/*버튼 - 각각 생성되는 객체*/
+		cp.add(btReset, BorderLayout.NORTH);
+		cp.add(btcal, BorderLayout.SOUTH);
+		cp.add(ca, BorderLayout.CENTER);//영역지정 
+		ca.add(tf, BorderLayout.NORTH);
+		ca.add(bu, BorderLayout.CENTER);//영역지정
+		
+		bu.add(bt1);
+		bu.add(bt2);
+		bu.add(bt3);
+		bu.add(btAdd);
+		bu.add(bt4);
+		bu.add(bt5);
+		bu.add(bt6);
+		bu.add(btSub);
+		bu.add(bt7);
+		bu.add(bt8);
+		bu.add(bt9);
+		bu.add(btMul);
+		bu.add(bt0);
+		bu.add(new JButton(""));
+		bu.add(btDot);
+		bu.add(btDiv);
+		
+		/*이벤트 영역*/
+		tf.setEditable(false);//tf 값 임의변경 금지
+		
+		btcal.addActionListener(this);
+		btReset.addActionListener(this);
+		
+		bt1.addActionListener(this);
+		bt2.addActionListener(this);
+		bt3.addActionListener(this);
+		bt4.addActionListener(this);
+		bt5.addActionListener(this);
+		bt6.addActionListener(this);
+		bt7.addActionListener(this);
+		bt8.addActionListener(this);
+		bt9.addActionListener(this);
+		bt0.addActionListener(this);
+		btMul.addActionListener(this);
+		btDot.addActionListener(this);
+		btDiv.addActionListener(this);
+		btAdd.addActionListener(this);
+		btSub.addActionListener(this);
+		
+		/*전체 크기 사이즈 지정 및 시각화*/
+		setSize(400,400);
+		setVisible(true);/*프레임 화면 보이게하는 여부*/
+				
+	}
+	/*실행 영역*/
+	public static void main(String[] args) {		
+		Calculator car = new Calculator();
+	}
+//계산 부분...(안됨)
+	public void actionPerformed(ActionEvent e) {				
+	JButton b = (JButton)e.getSource();
+			//System.out.println(b.getText());	
+	String s = e.getActionCommand();	//s 버튼 인식 출력
+	if(s=="1"||s=="2"||s=="3"||s=="4"||s=="5"||s=="6"||s=="7"||s=="8"||s=="9"||s=="0") {
+			
+			str1 = str1+s;
+			tf.setText(str1);
+			str2 = str2+s;
+			tf.setText(str2);	
+	}
+		if(s=="+"||s=="-"||s=="*"||s=="/") { //연산자 받기
+			su = true;
+			cu = false;
+			op =s;
+			tf.setText("");
+		}// 이부분 문제..
+		if(s =="Calculate") {	
+			i=Double.parseDouble(str1);
+			j=Double.parseDouble(str2);
+			
+			if(op=="+") {
+				result = i + j;
+				tf.setText(" " + result);
+			}
+				if(op=="-") {
+					result = i-j;
+					tf.setText(" " + result);
+				}
+				if(op=="*") {
+					result = i*j;
+					tf.setText(" " + result);
+				}
+				if(op=="/") {
+			    	if(i==0||j==0) {
+						tf.setText("error");	
+					}else {
+					result = i/j;
+					tf.setText(" " + result);
+					}
+			}
+		}
+		if(s=="Reset") {	//clear
+			str1="";
+			str2="";
+			i=0;
+			j=0;
+			result=0;
+			su = false;
+			cu = false;
+			tf.setText("");
+			}
+	}
+}
